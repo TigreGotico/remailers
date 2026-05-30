@@ -1,27 +1,9 @@
-from datetime import timedelta
+"""Read the live remailer stats from Usenet and print the network."""
+from remailers.network import fetch_live_remailers
 
-
-class RemailerStats:
-    GROUP = "alt.privacy.anon-server.stats"
-
-    def __init__(self, usenet_server):
-        self.usenet_server = usenet_server
-
-    def retrieve(self, subject, since=None):
-        since = since or timedelta(days=2)
-        articles = []
-        with self.usenet_server as server:
-            for article in server.get_new_news(self.GROUP, since=since):
-                if subject in article.subject:
-                    article.text  # retrieve body while connection is open
-                    articles.append(article)
-        # TODO sort by date
-        return articles[0]
-
-    def get_mixmaster_stats(self, since=None):
-        return self.retrieve("Frelled Mixmaster Stats", since=since)
-
-    def get_cypherpunk_stats(self, since=None):
-        return self.retrieve("Frelled Cypherpunk Stats", since=since)
-
-
+remailers = fetch_live_remailers()
+print(f"{len(remailers)} active remailers:\n")
+for r in sorted(remailers, key=lambda x: x.uptime, reverse=True):
+    flags = " ".join(sorted(c for c in ("cpunk", "mix", "pgp", "post", "hsub")
+                            if r.supports(c)))
+    print(f"  {r.name:10} {r.address:32} up={r.uptime:7} lat={r.latency:6} [{flags}]")
