@@ -1,10 +1,9 @@
-import string
-import random
+import os
 
 
-# TODO os.urandom
-def generate_iv(key_lenght=8):
-    """Generate a random string of letters and digits """
-    valid_chars = string.ascii_letters + string.digits
-    return ''.join(random.choice(valid_chars) for i in range(key_lenght)).encode("utf-8")
+def generate_iv(length=8):
+    """Return a cryptographically random initialization vector.
 
+    `length` is in bytes (8 by default — one Blowfish block / the hSub IV size).
+    """
+    return os.urandom(length)

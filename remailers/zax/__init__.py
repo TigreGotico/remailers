@@ -39,7 +39,7 @@ class ZAX:
     @classmethod
     def get_nym_pubkey(cls):
         if not cls._pubkey:
-            r = requests.get(cls.key_url)
+            r = requests.get(cls.key_url, timeout=15)
             if r.status_code == 200:
                 cls._pubkey = r.text
         return cls._pubkey
@@ -52,12 +52,10 @@ class ZAX:
     # TODO remailer/mixmaster option
     def register_by_email(self, email, password, headers=None):
         headers = headers or {}
-        body = "Config:\n"
-        body += "Nym-Commands: create"
-        body = ""
+        lines = ["Config:", "Nym-Commands: create"]
         for k, v in headers.items():
-            body += k + ": " + v + "\n"
-        body += self.credentials.pubkey
+            lines.append(k + ": " + v)
+        body = "\n".join(lines) + "\n" + self.credentials.pubkey
         body = encrypt_text(self.get_nym_pubkey(), body,
                             creds=self.credentials)
         return send_email(email, password,

@@ -67,7 +67,7 @@ class Credentials:
                                                   email=email,
                                                   expires=expires)
             if path:
-                export_private_key(path, binary)
+                export_private_key(path, key=self.private_key, binary=binary)
 
     def load_private(self, path, binary=False):
         if binary:

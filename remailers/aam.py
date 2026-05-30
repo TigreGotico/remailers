@@ -50,7 +50,7 @@ class AnonBox:
                                              for l in decrypted.split("\n")]
                             articles.append(article)
                             continue
-                except:
+                except (PGPError, ValueError):
                     pass  # same subject, but not using our key
         # TODO sort by date
         return articles
