@@ -44,14 +44,14 @@ send_tor_email(
 ```
 
 Parameters:
-- `user` — SMTP sender address (must match your SMTP account)
-- `pswd` — SMTP password or app-specific password
-- `destinatary` — recipient email address
-- `subject` — email subject
-- `contents` — email body
-- `host` — SMTP server (default `mail.smtp2go.com`)
-- `port` — SMTP port (default 465 for TLS)
-- `tor_port` — Tor SOCKS port (default 9050)
+- `user` - SMTP sender address (must match your SMTP account)
+- `pswd` - SMTP password or app-specific password
+- `destinatary` - recipient email address
+- `subject` - email subject
+- `contents` - email body
+- `host` - SMTP server (default `mail.smtp2go.com`)
+- `port` - SMTP port (default 465 for TLS)
+- `tor_port` - Tor SOCKS port (default 9050)
 
 ## TorSMTP class
 
@@ -125,8 +125,8 @@ send_email(
 ## SMTP services that work well
 
 Services accepting anonymous/temporary accounts via Tor:
-- `mail.smtp2go.com` — requires account signup, free tier available
-- `mx.protonmail.com` — ProtonMail's relay (requires ProtonMail account)
+- `mail.smtp2go.com` - requires account signup, free tier available
+- `mx.protonmail.com` - ProtonMail's relay (requires ProtonMail account)
 - Self-hosted mail servers (if you control one)
 
 > Note: Many free services are blocked or rate-limited for Tor. SMTP2GO is reliable for low-volume anonymous mail.
@@ -192,5 +192,8 @@ pkill -9 tor && tor
 
 - Email headers (From, To, Subject if not encrypted) are visible to the SMTP server
 - PGP-encrypt the subject and body separately if needed
-- Tor prevents IP-based tracking; timing-based analysis is still possible
-- The SMTP server logs your plaintext message; use end-to-end encryption
+- Tor prevents IP-based tracking. Timing-based analysis is still possible
+- The SMTP server logs your plaintext message. Use end-to-end encryption
+
+---
+[← AnonBox](anonbox.md) · [Home](index.md) · [ZAX Nym Servers →](zax-nyms.md)

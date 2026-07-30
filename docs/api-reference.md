@@ -16,7 +16,7 @@ PGP key management for encryption, decryption, and signing.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `path` | str | — | File path to key (loaded if exists, else generated) |
+| `path` | str | - | File path to key (loaded if exists, else generated) |
 | `name` | str or None | None | UID name for new key |
 | `email` | str or None | None | Email for UID (optional) |
 | `expires` | timedelta/datetime or None | None | Key expiry (optional) |
@@ -28,13 +28,18 @@ PGP key management for encryption, decryption, and signing.
 | `pubkey` | str | Public key (ASCII-armored) |
 | `private_key` | pgpy.PGPKey | Underlying PGP key object |
 
-### Methods
+### Methods: encrypt, decrypt, sign
 
 | Method | Signature | Returns | Description |
 | --- | --- | --- | --- |
 | `encrypt(txt, key=None)` | `encrypt(txt, key=None) -> str` | str | Encrypt plaintext (to own pubkey by default) |
 | `decrypt(encrypted_message)` | `decrypt(encrypted_message) -> str` | str | Decrypt PGP message |
 | `sign(message, intended_recipients=None)` | `sign(...) -> PGPSignature` | PGPSignature | Sign a message |
+
+### Methods: key loading
+
+| Method | Signature | Returns | Description |
+| --- | --- | --- | --- |
 | `load_private(path, binary=False)` | instance | None | Load key from file |
 | `import_key(key_blob)` | static | pgpy.PGPKey | Load key from bytes/string |
 
@@ -51,9 +56,9 @@ match_hsub(hsub, subject) -> bool
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `text` | str | — | Subject text to hash |
+| `text` | str | - | Subject text to hash |
 | `iv` | bytes or None | None | 8-byte IV (generated if None) |
-| `hsublen` | int | 48 | Output length in hex chars (48–80) |
+| `hsublen` | int | 48 | Output length in hex chars (48-80) |
 
 Returns: 48 hex characters by default (192 bits: 64-bit IV + 128-bit SHA256).
 
@@ -61,7 +66,7 @@ Returns: 48 hex characters by default (192 bits: 64-bit IV + 128-bit SHA256).
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `hsub` | str | hSub to test (48–80 hex chars) |
+| `hsub` | str | hSub to test (48-80 hex chars) |
 | `subject` | str | Plaintext subject to match |
 
 Returns: `True` if hSub matches subject (with extracted IV), `False` otherwise.
@@ -79,8 +84,8 @@ match_esub(text, key, esub) -> bool
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `text` | str | — | Subject text |
-| `key` | str | — | Shared secret (key) |
+| `text` | str | - | Subject text |
+| `key` | str | - | Shared secret (key) |
 | `iv` | bytes or None | None | 8-byte IV (generated if None) |
 
 Returns: 48 hex characters (192 bits: 64-bit IV + 128-bit Blowfish-CFB ciphertext).
@@ -161,10 +166,10 @@ build_message(sent_from, to, subject, body) -> str
 ```
 
 Assemble an RFC-822 email. Parameters:
-- `sent_from` (str) — From header
-- `to` (list[str]) — To addresses
-- `subject` (str) — Subject
-- `body` (str) — Message body
+- `sent_from` (str): From header
+- `to` (list[str]): To addresses
+- `subject` (str): Subject
+- `body` (str): Message body
 
 Returns: RFC-822 formatted string with `\r\n` line endings.
 
@@ -272,9 +277,9 @@ class ZAX:
 
 ### Built-in servers
 
-- `IsNotMyName` — domain: `is-not-my.name`
-- `MixNym` — domain: `mixnym.net`
-- `Thinhose` — domain: `nym.thinhose.net`
+- `IsNotMyName` - domain: `is-not-my.name`
+- `MixNym` - domain: `mixnym.net`
+- `Thinhose` - domain: `nym.thinhose.net`
 
 ## Version
 
@@ -283,3 +288,6 @@ from remailers import __version__
 ```
 
 Current package version (string).
+
+---
+[← Security](security.md) · [Home](index.md) · [Remailer Networks →](remailer-networks.md)

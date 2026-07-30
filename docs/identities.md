@@ -21,8 +21,8 @@ If the file exists, it is loaded. If not, a new key is generated and saved.
 ### File formats
 
 Credentials auto-detects format based on file extension:
-- `.asc`, `.txt` — ASCII-armored (default for text)
-- Other extensions — binary format
+- `.asc`, `.txt`: ASCII-armored (default for text)
+- Other extensions: binary format
 
 ```python
 # ASCII-armored (human-readable)
@@ -165,3 +165,6 @@ key, _ = pgpy.PGPKey.from_blob(open("my_key.asc").read())
 message = pgpy.PGPMessage.new("plaintext")
 encrypted = key.encrypt(message)
 ```
+
+---
+[← Quickstart](quickstart.md) · [Home](index.md) · [Subjects →](subjects.md)

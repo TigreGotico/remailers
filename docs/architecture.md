@@ -275,9 +275,5 @@ The actual message body (PGP-encrypted) is separate from the subject, so subject
    - The body is the PGP-encrypted message
    - To read it, Bob decrypts using the sender's public key (if he trusts Alice and knows her key)
 
-## See Also
-
-- [Remailer Networks](remailer-networks.md) — overview of live remailers
-- [Algorithms](algorithms.md) — detailed message format and encryption
-- [Privacy Guarantees](privacy-guarantees.md) — what anonymity is provided
-- [Using the Network](using-the-network.md) — practical guide with code examples
+---
+[← Remailer Networks](remailer-networks.md) · [Home](index.md) · [Algorithms →](algorithms.md)
