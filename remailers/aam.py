@@ -10,47 +10,47 @@ class AnonBox:
         self.usenet_server = usenet_server
         self.esub_key = esub_key
 
-    def retrieve(self, since=None):
+    def _decrypt_into(self, article):
+        """Decrypt the article body in place; return True on success."""
+        decrypted = self.creds.decrypt(article.text)
+        article._body = [line.encode("utf-8")
+                         for line in decrypted.split("\n")]
+        return True
+
+    def retrieve(self, limit=50):
+        """Pull the latest `limit` messages and keep the ones we can decrypt.
+
+        Browses by GROUP rather than NEWNEWS, which public servers disable.
+        """
         articles = []
         with self.usenet_server as server:
-            for article in server.get_new_news(self.GROUP, since=since):
-                if "BEGIN PGP MESSAGE" in article.text:
-                    article.headers  # retrieve while connection is open
-                    try:
-                        decrypted = self.creds.decrypt(article.text)
-                        article._body = [l.encode("utf-8")
-                                         for l in decrypted.split("\n")]
-                        articles.append(article)
-                    except (PGPError, ValueError):
-                        continue
-        # TODO sort by date
+            for article in server.get_articles(self.GROUP, limit=limit):
+                if "BEGIN PGP MESSAGE" not in article.text:
+                    continue
+                try:
+                    self._decrypt_into(article)
+                    articles.append(article)
+                except (PGPError, ValueError):
+                    continue
         return articles
 
-    def retrieve_by_subject(self, subject, since=None, esubs=True, hsubs=True):
+    def retrieve_by_subject(self, subject, limit=200, esubs=True, hsubs=True):
+        """Keep messages whose subject matches `subject` directly or via an
+        hSub/eSub, and that decrypt with our key."""
         articles = []
         with self.usenet_server as server:
-            for article in server.get_new_news(self.GROUP, since=since):
+            for article in server.get_articles(self.GROUP, limit=limit):
+                matched = (
+                    subject == article.subject
+                    or (hsubs and match_hsub(article.subject, subject))
+                    or (esubs and self.esub_key
+                        and match_esub(subject, self.esub_key, article.subject))
+                )
+                if not matched:
+                    continue
                 try:
-                    if subject == article.subject:
-                        decrypted = self.creds.decrypt(article.text)
-                        article._body = [l.encode("utf-8")
-                                         for l in decrypted.split("\n")]
-                        articles.append(article)
-                        continue
-                    if hsubs and match_hsub(article.subject, subject):
-                        decrypted = self.creds.decrypt(article.text)
-                        article._body = [l.encode("utf-8")
-                                         for l in decrypted.split("\n")]
-                        articles.append(article)
-                        continue
-                    if esubs and self.esub_key:
-                        if match_esub(subject, self.esub_key, article.subject):
-                            decrypted = self.creds.decrypt(article.text)
-                            article._body = [l.encode("utf-8")
-                                             for l in decrypted.split("\n")]
-                            articles.append(article)
-                            continue
-                except:
-                    pass  # same subject, but not using our key
-        # TODO sort by date
+                    self._decrypt_into(article)
+                    articles.append(article)
+                except (PGPError, ValueError):
+                    continue  # subject matched, but not encrypted to our key
         return articles

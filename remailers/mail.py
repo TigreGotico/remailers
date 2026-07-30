@@ -59,6 +59,26 @@ class TorSMTP(SocksSMTP):
                          proxy_port=tor_port, socket_options=socket_options)
 
 
+def build_message(sent_from, to, subject, body):
+    """Assemble an RFC-822 message. Header lines must not be indented, or the
+    leading whitespace folds them into the previous header's value."""
+    recipients = ", ".join(to)
+    return (
+        f"From: {sent_from}\r\n"
+        f"To: {recipients}\r\n"
+        f"Subject: {subject}\r\n"
+        f"\r\n"
+        f"{body}\r\n"
+    )
+
+
+def _send(server, user, destinatary, subject, contents):
+    to = [destinatary]
+    email_text = build_message(user, to, subject, contents)
+    server.sendmail(user, to, email_text)
+    server.close()
+
+
 def send_email(user, pswd, destinatary, subject, contents,
                host="mail.smtp2go.com", port=465, ssl=True):
     if ssl:
@@ -67,50 +87,19 @@ def send_email(user, pswd, destinatary, subject, contents,
         server = SMTP(host=host, port=port)
     server.ehlo()
     server.login(user, pswd)
-
-    sent_from = user
-    to = [destinatary]
-    subject = subject
-    body = contents
-
-    email_text = """\
-    From: %s
-    To: %s
-    Subject: %s
-    
-    %s
-    """ % (sent_from, ", ".join(to), subject, body)
-
-    server.sendmail(sent_from, to, email_text)
-    server.close()
+    return _send(server, user, destinatary, subject, contents)
 
 
 def send_tor_email(user, pswd, destinatary, subject, contents,
-               host="mail.smtp2go.com", port=465):
+                   host="mail.smtp2go.com", port=465):
     server = TorSMTP(host=host, port=port)
     server.ehlo()
     server.login(user, pswd)
-
-    sent_from = user
-    to = [destinatary]
-    subject = subject
-    body = contents
-
-    email_text = """\
-    From: %s
-    To: %s
-    Subject: %s
-    
-    %s
-    """ % (sent_from, ", ".join(to), subject, body)
-
-    server.sendmail(sent_from, to, email_text)
-    server.close()
+    return _send(server, user, destinatary, subject, contents)
 
 
 def mail2news():
-    # TODO
     # mail2news@dizum.com
     # mail2news@neodome.net
     # mail2news@m2n.mixmin.net
-    pass
+    raise NotImplementedError
