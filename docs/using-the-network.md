@@ -52,7 +52,7 @@ for r in suitable:
     print(f"  {r.name} ({r.uptime})")
 ```
 
-**Preferred choices (as of 2026):**
+**Preferred choices:**
 
 ```
 dizum:    remailer@dizum.com        (99% uptime, fully featured)
@@ -175,7 +175,7 @@ print("Message sent!")
 **For Gmail:**
 
 1. Enable 2-factor authentication
-2. Generate an app-specific password: https://myaccount.google.com/apppasswords
+2. Generate an [app-specific password](https://myaccount.google.com/apppasswords)
 3. Use that password in the `send_chain` call
 
 **For other SMTP servers:**
@@ -328,12 +328,12 @@ for article in code_messages:
 
 Before sending:
 
-- [ ] **Remailers are online** — Check the latest stats (they should be < 1 day old)
-- [ ] **Keys are up-to-date** — Fetch the keyring fresh; old keys won't work
-- [ ] **Chain is diverse** — Use at least 3 different remailers
-- [ ] **Remailers support required capabilities** — Check `cpunk`, `pgp`, `post` as needed
-- [ ] **SMTP account works** — Test sending a normal email first
-- [ ] **Message encrypts locally** — Test a round-trip before sending live:
+- [ ] **Remailers are online** - Check the latest stats (they should be < 1 day old)
+- [ ] **Keys are up-to-date** - Fetch the keyring fresh; old keys won't work
+- [ ] **Chain is diverse** - Use at least 3 different remailers
+- [ ] **Remailers support required capabilities** - Check `cpunk`, `pgp`, `post` as needed
+- [ ] **SMTP account works** - Test sending a normal email first
+- [ ] **Message encrypts locally** - Test a round-trip before sending live:
 
 ```python
 # Test: encrypt and decrypt with your own key
@@ -343,8 +343,8 @@ recovered = creds.decrypt(ciphertext)
 assert recovered == plaintext
 ```
 
-- [ ] **No metadata leaks** — Check that the message body doesn't contain identifying info
-- [ ] **Timing is varied** — Send at different times than other messages, if trying to hide patterns
+- [ ] **No metadata leaks** - Check that the message body doesn't contain identifying info
+- [ ] **Timing is varied** - Send at different times than other messages, if trying to hide patterns
 
 ## Troubleshooting
 
@@ -375,7 +375,7 @@ keyring = load_keyring(fetch_keyring_blob())
 print("Keys in keyring:", list(keyring.keys()))
 ```
 
-Some remailers may not publish their keys; in that case, you must fetch the key from their website manually.
+Some remailers may not publish their keys. In that case, fetch the key from their website manually.
 
 ### PGP Decryption Fails
 
@@ -431,12 +431,5 @@ message, entry_addr = build_chain(
 
 The exit remailer will pool the message and forward it after the specified delay, providing some timing-analysis resistance.
 
-## See Also
-
-- [Remailer Networks](remailer-networks.md) — overview of live remailers
-- [Architecture](architecture.md) — how chains work internally
-- [Algorithms](algorithms.md) — message format details
-- [Privacy Guarantees](privacy-guarantees.md) — security assumptions and threat model
-- [Security](security.md) — cryptography and IV entropy
-- [AnonBox](anonbox.md) — detailed message retrieval
-- [Subjects](subjects.md) — hSub and eSub details
+---
+[← Privacy Guarantees](privacy-guarantees.md) · [Home](index.md)

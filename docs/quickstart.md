@@ -109,3 +109,6 @@ send_tor_email(
 - Post to `alt.anonymous.messages` with [AnonBox](anonbox.md).
 - Configure [Tor email delivery](tor-email.md).
 - See [security notes](security.md) on cryptography and threat model.
+
+---
+[Home](index.md) · [Identities →](identities.md)

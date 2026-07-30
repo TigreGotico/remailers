@@ -159,3 +159,6 @@ iv = generate_iv(8)  # 8 random bytes, cryptographically secure
 ```
 
 IV is never reused for the same subject and key; a fresh one is generated per call.
+
+---
+[← Identities](identities.md) · [Home](index.md) · [AnonBox →](anonbox.md)

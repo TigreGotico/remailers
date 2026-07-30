@@ -5,7 +5,7 @@ hashed/encrypted subjects (hSub/eSub), nym-server (ZAX) registration, and
 SOCKS/Tor SMTP. Built on top of [`usenet`](https://github.com/JarbasAl/usenet).
 
 > For research and privacy education. The public nym/remailer network is largely
-> historical; treat the bundled server definitions as starting points.
+> historical. Treat the bundled server definitions as starting points.
 
 ## Install
 
@@ -24,7 +24,7 @@ creds = Credentials("my_key.asc", name="PythonicAnon")
 print(creds.pubkey)
 ```
 
-Hashed and encrypted subjects — let a recipient spot a message meant for them
+Hashed and encrypted subjects: let a recipient spot a message meant for them
 without revealing the subject:
 
 ```python
@@ -55,13 +55,13 @@ for article in inbox.retrieve_by_subject("evil dolphin captain"):
     print(article.text)
 ```
 
-ZAX nym servers and Tor email are in `remailers.zax` and `remailers.mail`; see
+ZAX nym servers and Tor email are in `remailers.zax` and `remailers.mail`. See
 `examples/`.
 
 ## Security notes
 
 - Initialization vectors come from `os.urandom` (`remailers.utils.generate_iv`).
-- hSub uses SHA-256; eSub uses Blowfish (Type-I compatibility) — eSub exists for
+- hSub uses SHA-256. eSub uses Blowfish for Type-I compatibility: it exists for
   interop with the legacy remailer ecosystem, not as modern AEAD.
 - Message bodies are protected by PGP (RSA-4096, AES-256), not by the subject
   scheme.
@@ -73,7 +73,7 @@ pip install -e .[test]
 pytest test/
 ```
 
-Tests are offline — subject round-trips, IV entropy, and a PGP encrypt/decrypt
+Tests are offline: subject round-trips, IV entropy, and a PGP encrypt/decrypt
 cycle with a freshly generated key.
 
 ## License

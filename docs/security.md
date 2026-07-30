@@ -134,31 +134,34 @@ Not protected by:
 
 ## Best practices
 
-1. **Always use PGP encryption** — do not post plaintext to `alt.anonymous.messages`
-2. **Use hSub for new code** — eSub is legacy only
-3. **Encrypt subjects too** (if needed) — use PGP encryption or eSub as an extra layer
-4. **Use Tor** — for IP anonymity and defense against ISP/server-side analysis
-5. **Use Tor email** — for anonymous SMTP gateways (remailers.mail.send_tor_email)
-6. **Rotate keys periodically** — reduce exposure if a key is compromised
-7. **Don't reuse subjects across identities** — correlation attacks
-8. **Use strong passphrases** — on your PGP key file
+1. **Always use PGP encryption** - do not post plaintext to `alt.anonymous.messages`
+2. **Use hSub for new code** - eSub is legacy only
+3. **Encrypt subjects too** (if needed) - use PGP encryption or eSub as an extra layer
+4. **Use Tor** - for IP anonymity and defense against ISP/server-side analysis
+5. **Use Tor email** - for anonymous SMTP gateways (remailers.mail.send_tor_email)
+6. **Rotate keys periodically** - reduce exposure if a key is compromised
+7. **Don't reuse subjects across identities** - correlation attacks
+8. **Use strong passphrases** - on your PGP key file
 
 ## Known limitations
 
-- **Type-I remailer network (eSub) is largely defunct** — most servers are offline
-- **hSub/eSub do not encrypt the subject to the recipient** — only hide from observers; the NNTP server still sees plaintext
-- **Message timing is visible** — an adversary can see when you post (use artificial delays if needed)
-- **No forward secrecy** — compromised private key reveals all past messages
+- **Type-I remailer network (eSub) is largely defunct** - most servers are offline
+- **hSub/eSub do not encrypt the subject to the recipient** - they only hide it from observers. The NNTP server still sees plaintext
+- **Message timing is visible** - an adversary can see when you post (use artificial delays if needed)
+- **No forward secrecy** - compromised private key reveals all past messages
 
 ## Cryptanalysis
 
 - **PGP (RSA-4096 + AES-256):** NIST-approved, no practical breaks known
 - **SHA-256 (hSub):** collision-resistant, no practical breaks known
-- **Blowfish (eSub):** small block size (64 bits) problematic for large messages; deprecated by Schneier in favor of Twofish
+- **Blowfish (eSub):** small block size (64 bits), problematic for large messages. Deprecated by Schneier in favor of Twofish
 - **MD5:** cryptographically broken for collision resistance, but OK for MAC in MD5(subject) (not a cryptographic use)
 
 ## Recommended reading
 
-- [RFC 4880](https://tools.ietf.org/html/rfc4880) — OpenPGP Message Format
-- [RFC 1402](https://tools.ietf.org/html/rfc1402) — alt.anonymous.messages charter
-- [Schneier, B. (2015).](https://www.schneier.com/cryptography/blowfish/) — Blowfish deprecation notes
+- [RFC 4880](https://tools.ietf.org/html/rfc4880): OpenPGP Message Format
+- [RFC 1402](https://tools.ietf.org/html/rfc1402): alt.anonymous.messages charter
+- [Schneier, B. (2015).](https://www.schneier.com/cryptography/blowfish/): Blowfish deprecation notes
+
+---
+[← ZAX Nym Servers](zax-nyms.md) · [Home](index.md) · [API Reference →](api-reference.md)

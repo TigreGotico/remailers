@@ -339,11 +339,11 @@ assert not match_esub(subject, "wrong_key", esub)
 
 ## Type-II Mixmaster Packets
 
-The library currently does not build Type-II Mixmaster packets; it only builds Type-I messages. However, Type-II remailers can accept Type-I messages (they recognize the `::` block format), so no changes are needed to interoperate.
+The library does not build Type-II Mixmaster packets. It only builds Type-I messages. Type-II remailers can accept Type-I messages, since they recognize the `::` block format, so no changes are needed to interoperate.
 
 **Type-II packet structure (for reference):**
 
-- All packets are a fixed size (currently ~20 KB) to defeat traffic analysis
+- All packets are a fixed size (about 20 KB) to defeat traffic analysis
 - Packets contain an encrypted chain of RSA-encrypted "hop" information
 - Each hop is encrypted to the next remailer's key and contains routing info and a secret to decrypt the next hop
 - Messages are pooled (held in a queue) and randomly reordered before forwarding
@@ -363,9 +363,5 @@ Mixmaster is deployed in the live network (remailers supporting the `mix` flag),
 | **Modern** | Yes, still in use | Yes, in use (via Yamn) | Yes (recommended) | No (legacy only) |
 | **Library support** | Yes (`remailers.cypherpunk`) | No (Type-I sufficient) | Yes (`remailers.hsub`) | Yes (`remailers.esub`) |
 
-## See Also
-
-- [Remailer Networks](remailer-networks.md) — network overview and discovery
-- [Architecture](architecture.md) — how chains route messages
-- [Privacy Guarantees](privacy-guarantees.md) — what these algorithms protect
-- [Using the Network](using-the-network.md) — practical examples
+---
+[← Architecture](architecture.md) · [Home](index.md) · [Privacy Guarantees →](privacy-guarantees.md)

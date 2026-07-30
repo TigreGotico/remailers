@@ -277,9 +277,5 @@ For maximum privacy:
 - Use `latent` remailers with variable delays
 - Monitor the network for operator/reliability changes
 
-## See Also
-
-- [Remailer Networks](remailer-networks.md) — live remailers and their uptime
-- [Architecture](architecture.md) — how chains work
-- [Algorithms](algorithms.md) — encryption details
-- [Using the Network](using-the-network.md) — practical examples with security considerations
+---
+[← Algorithms](algorithms.md) · [Home](index.md) · [Using the Network →](using-the-network.md)

@@ -193,3 +193,6 @@ They should not be relied upon for actual anonymous communication. The modern al
 ## Limitation
 
 The ZAX implementation does not validate responses from the nym server. Error handling is minimal. This is intentional to keep the code simple and suitable for historical/experimental use.
+
+---
+[← Tor Email](tor-email.md) · [Home](index.md) · [Security →](security.md)

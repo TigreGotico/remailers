@@ -6,14 +6,14 @@ encryption.
 ## Overview
 
 `AnonBox` encrypts messages with PGP, posts them to Usenet under a hashed or
-plain subject, and later retrieves messages addressed to you — decrypting them
+plain subject, and later retrieves messages addressed to you: decrypting them
 with your private key. It browses the group by article range (GROUP), which
 works on public servers even where `NEWNEWS` is disabled.
 
 ## Servers
 
 Reading `alt.anonymous.messages` is anonymous on many servers (e.g.
-`news.neodome.net`). Posting needs a server that accepts anonymous posts;
+`news.neodome.net`). Posting needs a server that accepts anonymous posts.
 `paganini.bofh.team` and `news.tcpreset.net` do (no account) and carry the
 group. See [servers](../../usenet/docs/servers.md) and `usenet.probe`.
 
@@ -66,10 +66,10 @@ for article in articles:
 ```
 
 Parameters:
-- `subject` — the plaintext subject to match
-- `limit` — number of recent messages to scan (default 200)
-- `hsubs=True` — match hashed subjects (hSub)
-- `esubs=True` — match encrypted subjects (eSub; requires `esub_key`)
+- `subject` - the plaintext subject to match
+- `limit` - number of recent messages to scan (default 200)
+- `hsubs=True` - match hashed subjects (hSub)
+- `esubs=True` - match encrypted subjects (eSub, requires `esub_key`)
 
 ### All messages
 
@@ -104,7 +104,7 @@ print(AnonBox.GROUP)   # 'alt.anonymous.messages'
 
 - Messages that fail PGP decryption (not for your key, not a PGP message,
   corrupted) are silently skipped.
-- `AnonBox` and `UsenetServer` are not thread-safe; use one instance per thread.
+- `AnonBox` and `UsenetServer` are not thread-safe. Use one instance per thread.
 - A larger `limit` scans further back but costs one head+body fetch per message.
 
 ## Example workflow
@@ -126,3 +126,6 @@ inbox = AnonBox(creds, UsenetServer("news.neodome.net"))
 for article in inbox.retrieve_by_subject("rendezvous-alpha", limit=200):
     print(article.date, article.text)
 ```
+
+---
+[← Subjects](subjects.md) · [Home](index.md) · [Tor Email →](tor-email.md)

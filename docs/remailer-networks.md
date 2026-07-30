@@ -58,7 +58,7 @@ Mixmaster remailers use a more sophisticated protocol designed by Lance Cottrell
 
 Mixmaster packets are binary-encoded and carry a chain of encrypted "next-hop" instructions, each encrypted to the next remailer's RSA key. Type-II remailers can also accept Type-I messages (they see the `::` block and process it as Type-I).
 
-The live network currently includes Type-II remailers like `dizum`, `frell`, and `paranoia`. These remailers support both Type-I and Type-II messages.
+The live network includes Type-II remailers like `dizum`, `frell`, and `paranoia`. These remailers support both Type-I and Type-II messages.
 
 **Type-II capability flag:** `mix` in the stats post. If a remailer supports both:
 
@@ -86,11 +86,11 @@ Yamn ("Yet Another Mix Network") is a modern reimplementation of Mixmaster in Go
 - **Better ops**: Container-friendly, easier to deploy and monitor
 - **Same protocol**: Compatible with classic Mixmaster clients
 
-Several nodes are live in 2026. Yamn nodes are visible in the stats posts and can be chained with Type-I or Type-II remailers.
+Several Yamn nodes operate alongside the older networks. They are visible in the stats posts and can be chained with Type-I or Type-II remailers.
 
-## The Live Network (2026)
+## The Live Network
 
-As of May 2026, the remailer network is small but operational:
+The remailer network is small but operational:
 
 | Remailer | Address | Type | Uptime | Notes |
 |----------|---------|------|--------|-------|
@@ -194,9 +194,5 @@ The network is operated by volunteers and relies on donations. It is not scalabl
 - **Type-II design**: Lance Cottrell, "Mixmaster Protocol" (1995)
 - **Type-III (Mixminion)**: Andrei Serjantov & David Goldschlag, "Anonymity in the Wild" (2002)
 
-## See Also
-
-- [Architecture](architecture.md) — how remailers route messages through chains
-- [Algorithms](algorithms.md) — the Type-I `::` pasting token and encryption formats
-- [Privacy Guarantees](privacy-guarantees.md) — what remailers protect against (and what they don't)
-- [Using the Network](using-the-network.md) — practical guide to sending messages
+---
+[← API Reference](api-reference.md) · [Home](index.md) · [Architecture →](architecture.md)
