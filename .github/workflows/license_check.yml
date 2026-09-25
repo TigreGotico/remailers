@@ -7,4 +7,4 @@ on:
 
 jobs:
   license_check:
-    uses: OpenVoiceOS/gh-automations/.github/workflows/license_check.yml@dev
+    uses: OpenVoiceOS/gh-automations/.github/workflows/license-check.yml@dev
