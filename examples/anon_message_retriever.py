@@ -1,29 +1,24 @@
-from usenet.server_entry import UsenetServer
-from remailers.aam import AnonBox
+"""Scan alt.anonymous.messages and try to decrypt messages addressed to us.
+
+Reading is anonymous; this needs no account. Only messages encrypted to our
+key decrypt — everything else is skipped.
+"""
 from remailers.keys import Credentials
-from datetime import timedelta
+from remailers.aam import AnonBox
+from usenet.server_entry import UsenetServer
 
-USENET_URL = "news2.neva.ru"
+USENET_URL = "news.neodome.net"   # carries alt.anonymous.messages
 
-server = UsenetServer(USENET_URL)
-creds = Credentials("my_private_key.asc")
-inbox = AnonBox(creds, server)
+creds = Credentials("my_private_key.asc", name="PythonicGhost")
+inbox = AnonBox(creds, UsenetServer(USENET_URL, timeout=20))
 
-
-### Test search by subject, all subjects below should work
-# this is the subject after hsub
-subject = "4b67314630615a4f693c3adc1b49da3157a2f2337a70f6a7"
-# this is the subject before hsub
+# Search by subject (matches a plaintext subject, its hSub, or eSub).
 subject = "evil dolphin"
-print("retrieving", subject, "from", USENET_URL)
-articles = inbox.retrieve_by_subject(subject, since=timedelta(days=1))
-for article in articles:
+print("searching", repr(subject), "on", USENET_URL)
+for article in inbox.retrieve_by_subject(subject, limit=100):
     print(article.subject, "-", article.text)
 
-
-### Test brute force decryption (try to decrypt all messages)
-print("retrieving from", USENET_URL)
-articles = inbox.retrieve(since=timedelta(days=1))
-for article in articles:
+# Brute force: try to decrypt every recent PGP message in the group.
+print("scanning latest messages on", USENET_URL)
+for article in inbox.retrieve(limit=50):
     print(article.subject, "-", article.text)
-

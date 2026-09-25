@@ -67,7 +67,7 @@ class Credentials:
                                                   email=email,
                                                   expires=expires)
             if path:
-                export_private_key(path, binary)
+                export_private_key(path, key=self.private_key, binary=binary)
 
     def load_private(self, path, binary=False):
         if binary:
@@ -90,7 +90,11 @@ class Credentials:
 
     def decrypt(self, encrypted_message):
         message = pgpy.PGPMessage.from_blob(encrypted_message)
-        return self.private_key.decrypt(message).message
+        plaintext = self.private_key.decrypt(message).message
+        # gpg/remailer messages use binary literal packets -> bytes; normalize
+        if isinstance(plaintext, (bytes, bytearray)):
+            plaintext = plaintext.decode("utf-8", "replace")
+        return plaintext
 
     def encrypt(self, txt, key=None):
         key = key or self.pubkey
